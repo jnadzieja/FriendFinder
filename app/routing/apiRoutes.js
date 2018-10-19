@@ -1,20 +1,27 @@
 const express = require("express");
 const path = require("path");
 
-const app = express();
+function apiRoutes(app) {
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use("/api/friends", express.static("data"))
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
 
-app.get("/api/friends", function(req, res) {
-  return res.json();
-});
+  let friends = [];
 
-app.post("/api/friends", function(req, res) {
-  let newFriend = req.body
+  app.get("/api/friends", function (req, res) {
+    return res.json(friends);
+  });
 
-  console.log(newFriend);
+  app.post("/api/friends", function (req, res) {
+    let newFriend = req.body
 
+    console.log(newFriend);
 
-});
+    friends.push(newFriend)
+
+    res.json(newFriend)
+
+  });
+}
+
+module.exports = apiRoutes;
